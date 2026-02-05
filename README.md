@@ -10,10 +10,8 @@ Project for the TSA Webmaster competition.
 > * additional content to enhance the community resource hub for end users. 
 
 ## Running and testing
-This project requires Tailwind CSS, Vite, and Node.js. You can install them using the instructions linked.
+This project requires [Tailwind CSS](https://tailwindcss.com/), [Vite](https://vite.dev/), and [Node.js](https://nodejs.org/). You can install [Node.js using the instructions on their website](https://nodejs.org/en/download).
 
-* [Node.js](https://nodejs.org/en/download)
-* [Vite](https://vite.dev/guide/#scaffolding-your-first-vite-project)
-* [Tailwind CSS](https://tailwindcss.com/docs/installation/using-vite)
+Afterwards run `npm install` to install Vite and Tailwind
 
-Afterwards just run `npm run dev` to test the page
+Then run `npm run dev` to open and test the page
