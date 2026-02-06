@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+.hologram {
+    background: repeating-linear-gradient(rgba(48, 58, 134, 0.7) 0%, rgba(109, 120, 222, 0.4) 15%, rgba(48, 58, 134, 0.7) 30%);
+    box-shadow: 0px 0px 15px rgba(109, 120, 222, 1);
+}
+.hologram2 {
+    background: repeating-linear-gradient(rgb(121, 136, 255) 0%, rgba(109, 120, 222, 1) 15%, rgb(121, 136, 255) 30%);
+    box-shadow: 0px 0px 15px rgba(109, 120, 222, 1);
+}
+.text-stroke { /* honestly kinda shocked tailwind doesnt have a text outline */
+    text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;
+}
