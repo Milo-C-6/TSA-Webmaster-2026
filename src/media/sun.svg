@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   width="800"
+   height="800"
+   viewBox="0 0 24 24"
+   fill="none"
+   version="1.1"
+   id="svg9"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs9" />
+  <path
+     d="M 12,2 V 3"
+     stroke="#1C274C"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     id="path1"
+     style="stroke:#ffffff;stroke-opacity:1" />
+  <path
+     d="m 12,21 v 1"
+     stroke="#1C274C"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     id="path2"
+     style="stroke:#ffffff;stroke-opacity:1" />
+  <path
+     d="M 22,12 H 21"
+     stroke="#1C274C"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     id="path3"
+     style="stroke:#ffffff;stroke-opacity:1" />
+  <path
+     d="M 3,12 H 2"
+     stroke="#1C274C"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     id="path4"
+     style="stroke:#ffffff;stroke-opacity:1" />
+  <path
+     d="M 19.0708,4.92969 18.678,5.32252"
+     stroke="#1C274C"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     id="path5"
+     style="stroke:#ffffff;stroke-opacity:1" />
+  <path
+     d="M 5.32178,18.6777 4.92894,19.0706"
+     stroke="#1C274C"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     id="path6"
+     style="stroke:#ffffff;stroke-opacity:1" />
+  <path
+     d="M 19.0708,19.0703 18.678,18.6775"
+     stroke="#1C274C"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     id="path7"
+     style="stroke:#ffffff;stroke-opacity:1" />
+  <path
+     d="M 5.32178,5.32227 4.92894,4.92943"
+     stroke="#1C274C"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     id="path8"
+     style="stroke:#ffffff;stroke-opacity:1" />
+  <path
+     d="M 6.34141,10 C 6.12031,10.6256 6,11.2987 6,12 c 0,3.3137 2.68629,6 6,6 3.3137,0 6,-2.6863 6,-6 0,-3.31371 -2.6863,-6 -6,-6 -0.7013,0 -1.3744,0.12031 -2,0.34141"
+     stroke="#1C274C"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     id="path9"
+     style="stroke:#ffffff;stroke-opacity:1" />
+</svg>

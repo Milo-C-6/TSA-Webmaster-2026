@@ -7,19 +7,10 @@
   <link href="/src/timeline.css" rel="stylesheet">
   <title>Timeline - Coruscant</title>
   <link rel="icon" href="src/media/icon.png" sizes="32x32">
+  <script src="src/head.js"></script>
 </head>
 <body>
-  <nav class="sticky top-0 bg-white/70 p-4 flex justify-between items-center z-1"> <!--this whole nav bar should really be put in with javascript or some other better way-->
-    <a>Logo</a>
-    <div class="hologram flex justify-between items-center gap-15 p-1 pl-20 pr-20 text-white rounded-2xl backdrop-blur-2xl">
-      <a href="index.html">Home</a>
-      <a href="resources.html">Resources</a>
-      <a href="#">Timeline</a>
-      <a href="events.html">Events</a>
-      <a href="reference.html">Reference</a>
-      <a title="Light/Dark Mode switcher">O</a>
-    </div>
-  </nav>
+  <script>createNavBar()</script>
   <header>
     <div class="flex h-1/4 bg-white/60 justify-center items-center">
         <h1 class="text-black p-4 text-8xl font-bold">Timeline</h1>
@@ -79,5 +70,6 @@
       </li>
     </ul>
   </main>
+  <script src="src/main.js"></script>
 </body>
 </html>
