@@ -1,6 +1,15 @@
 # TSA-Webmaster-2026
 Project for the TSA Webmaster competition.
 
+Our project follows the theme 
+
+## TODO:
+- [ ] Rename the planet, and get rid of other copyrighted things
+- [ ] Implement database and form support
+- [ ] Stylize events
+- [ ] Proper light/dark theme support
+- [ ] Experiment with other styling
+
 ## Theme:
 >Create a website that will serve as a community resource hub to highlight resources available to residents within the community (e.g., non-profits, support services, community events and programs, etc.). Your entry for this event is an exception to the general rules for the 2026 National TSA Conference regarding identifying information and you may include school or chapter name if it is the same name as the community used.
 > Your website should include the following: 
