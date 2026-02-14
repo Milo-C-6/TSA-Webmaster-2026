@@ -3,54 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="/src/style.css" rel="stylesheet">
+  <link href="src/style.css" rel="stylesheet">
   <title>Home - Coruscant</title>
   <link rel="icon" href="src/media/icon.png" sizes="32x32">
+  <script src="src/head.js"></script>
 </head>
 <body>
-  <!-- <div class="overflow-auto relative min-h-screen">
-    <img src="src/media/background.jpg" class="object-cover w-full h-full absolute -z-10" alt="Background Image"> 
-    Is there any reason to use this instead normal css background? It breaks the nav bar being sticky so unless theres another way to do this I think i'd prefer normal css background
-    -->
-  <nav class="sticky top-0 bg-white/70 p-4 flex justify-between items-center">
+  <script>createNavBar()</script> <!-- edit the nav bar in head.js-->
+  <!-- <nav class="sticky top-0 bg-white/70 p-4 flex justify-between items-center">
     <a>Logo</a>
     <div class="hologram flex justify-between items-center gap-15 p-1 pl-20 pr-20 text-white rounded-2xl backdrop-blur-2xl">
-      <!--still feeling slightly iffy about the hologram background, not sure how I would improve it though...-->
+      still feeling slightly iffy about the hologram background, not sure how I would improve it though...
       <a href="#">Home</a>
       <a href="resources.html">Resources</a>
       <a href="timeline.html">Timeline</a>
       <a href="events.html">Events</a>
       <a href="reference.html">Reference</a>
-      <a title="Light/Dark Mode switcher">O</a>
+      <a class="h-6 w-6" title="Right click for context menu" href="javascript:void(0)" id="themeToggle"><img style="height: 100%;" src="src/media/sun.svg"></a>
     </div>
-  </nav>
+  </nav> -->
   <header class="h-screen">
     <div class="flex h-3/4">
-      <div class="bg-white/60 flex grow items-center justify-center text-9xl">
+      <div class="bg-white/60 flex flex-col grow items-center justify-center text-9xl">
         <p class="text-black p-4 indent-20 font-bold">Welcome to<br><span class="font-thin" >Coruscant</span></p>
+        <p class="text-lg">The greatest city planet ecumenopolis in the whole universe, bound to make you live a good life with loads of oppurtunity!</p>
       </div>
       <div class="bg-white/30 w-2/5"></div>
     </div>
-    <div class="bg-white h-1/4 flex items-center justify-center">
+    <div class="bg-white dark:bg-black h-1/4 flex items-center justify-center">
       <p class="hologram2 w-3/4 bg-blue-300 p-10 rounded-tr-2xl rounded-bl-2xl outline-4 outline-blue-800">"Thousands of layers of buildings and skyscrapers cover the entire planetary surface of Coruscant. Because of this, Coruscant is one of only a handful of city-planets, known as an 'ecumenopolis.'"</p>
     </div>
   </header>
   <div class="bg-red-200 flex items-center justify-center p-5">
     <div>
       <p>Home to the galaxy's favorite food places!</p>
-      <p class="indent-10">Resources -> Food</p>
+      <p class="indent-10"><a class="link" href="resources.html#food">Resources -> Food</a></p>
     </div>
   </div>
   <div class="bg-white flex items-center justify-center p-5">
     <div>
       <p>Check out the planets best collection of books</p>
-      <p class="indent-10">Resources -> Libraries</p>
+      <p class="indent-10"><a class="link" href="resources.html#libraries">Resources -> Libraries</a></p>
     </div>
   </div>
   <div class="bg-red-200 flex items-center justify-center p-5">
     <div>
       <p>Greatest place for the arts</p>
-      <p class="indent-10">Resources -> Museums</p>
+      <p class="indent-10"><a class="link" href="resources.html#museums">Resources -> Museums</a></p>
     </div>
   </div>
   <div class="bg-white flex items-center justify-center p-5">
@@ -71,5 +70,6 @@
     </div>
     <img class="h-50" src="src/media/shuttle.webp"> <!--mayhaps this will have to be replaced with original/not copyrighted art-->
   </div>
+  <script src="src/main.js"></script>
 </body>
 </html>

@@ -6,26 +6,35 @@
   <link href="/src/style.css" rel="stylesheet">
   <title>Reference - Coruscant</title>
   <link rel="icon" href="src/media/icon.png" sizes="32x32">
+  <script src="src/head.js"></script>
 </head>
 <body>
-  <nav class="sticky top-0 bg-white/70 p-4 flex justify-between items-center"> <!--this whole nav bar should really be put in with javascript or some other better way-->
-    <a>Logo</a>
-    <div class="hologram flex justify-between items-center gap-15 p-1 pl-20 pr-20 text-white rounded-2xl backdrop-blur-2xl">
-      <a href="index.html">Home</a>
-      <a href="resources.html">Resources</a>
-      <a href="timeline.html">Timeline</a>
-      <a href="events.html">Events</a>
-      <a href="#">Reference</a>
-      <a title="Light/Dark Mode switcher">O</a>
-    </div>
-  </nav>
+  <script>createNavBar()</script>
   <header>
     <div class="flex h-1/4 bg-white/60 justify-center items-center">
         <h1 class="text-black p-4 text-8xl font-bold">Reference</h1>
     </div>
   </header>
   <main class="min-h-screen bg-white p-4">
-    <p>main content</p>
+    <p class="mb-2">Credits to all the software, images, and resources we used to make this website</p>
+    <h3 class="font-bold text-2xl">Software</h3>
+    <ul class="list-disc list-inside">
+      <li><a class="link" href="https://nodejs.org" target="_blank">NodeJS</a></li>
+      <li><a class="link" href="https://vite.dev/" target="_blank">Vite</a></li>
+      <li><a class="link" href="https://tailwindcss.com/" target="_blank">TailwindCSS</a></li>
+    </ul>
+    <h3 class="font-bold text-2xl">Assets</h3>
+    <ul class="list-disc list-inside">
+      <li><a class="link" href="https://www.svgrepo.com" target="_blank">SVG Repo</a></li>
+    </ul>
+    <h3 class="font-bold text-2xl">Resources</h3>
+    <ul class="list-disc list-inside">
+      <li><a class="link" href="https://tailwindcss.com/docs/" target="_blank">TailwindCSS Documentation</a></li>
+      <li><a class="link" href="https://developer.mozilla.org/en-US/docs/Web" target="_blank">Mozilla MDN Web Docs</a></li>
+      <li><a class="link" href="https://www.w3schools.com/" target="_blank">w3schools</a></li>
+      <li><a class="link" href="https://cssgradient.io/" target="_blank">cssgradient.io</a></li>
+    </ul>
   </main>
+  <script src="src/main.js"></script>
 </body>
 </html>

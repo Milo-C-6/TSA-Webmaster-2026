@@ -4,21 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="/src/style.css" rel="stylesheet">
+  <link href="/src/timeline.css" rel="stylesheet">
   <title>Timeline - Coruscant</title>
   <link rel="icon" href="src/media/icon.png" sizes="32x32">
+  <script src="src/head.js"></script>
 </head>
 <body>
-  <nav class="sticky top-0 bg-white/70 p-4 flex justify-between items-center"> <!--this whole nav bar should really be put in with javascript or some other better way-->
-    <a>Logo</a>
-    <div class="hologram flex justify-between items-center gap-15 p-1 pl-20 pr-20 text-white rounded-2xl backdrop-blur-2xl">
-      <a href="index.html">Home</a>
-      <a href="resources.html">Resources</a>
-      <a href="#">Timeline</a>
-      <a href="events.html">Events</a>
-      <a href="reference.html">Reference</a>
-      <a title="Light/Dark Mode switcher">O</a>
-    </div>
-  </nav>
+  <script>createNavBar()</script>
   <header>
     <div class="flex h-1/4 bg-white/60 justify-center items-center">
         <h1 class="text-black p-4 text-8xl font-bold">Timeline</h1>
@@ -26,40 +18,58 @@
   </header>
   <main class="min-h-screen bg-white p-4">
     <p>Coruscant has a rich history lasting over 100,000 years, showing the power of multiple different creatures, ultimately ending in the beautiful planet we have today!</p>
-    <ul>
+    <br>
+    <ul class="timeline">
       <li>
-        <h3>Today</h3> <!--Sometime before the fall of Coruscant and after 1000 BBY-->
-        <p>After the re-formation of the Galactic Republic in the Ruusan Reformation in 1000 BBY, Coruscant lives on today striving with years of peace, and more to come!</p>
+        <div class="content">
+          <h3>Today</h3>
+          <p>After the re-formation of the Democracy of the Universe in the Philin Reformation in 1000 BBY, Coruscant lives on today striving with years of peace, and more to come!</p>
+        </div>
       </li>
       <li>
-        <h3>1100 BBY - Republic Dark Age</h3>
-        <p>The Jedi regained power over a Republic and Coruscant without a Republic senate, acting as the sole rulers.</p>
+        <div class="content">
+          <h3>1100 BBY - Democratic Dark Age</h3>
+          <p>The Triegh regained power over the Democracy of the Universe and Coruscant without the senate, acting as the sole rulers.</p>
+        </div>
       </li>
       <li>
-        <h3>3653 BBY - Sith interference</h3>
-        <p>Plenty of wars occured between this and 1000 BBY momentariliy giving the Sith power over Coruscant and then back to more war stopping that.</p>
+        <div class="content">
+          <h3>3653 BBY - Malk interference</h3>
+          <p>Plenty of wars occured between this and 1000 BBY momentariliy giving the Malk power over Coruscant and then back to more war stopping that.</p>
+        </div>
       </li>
       <li>
-        <h3>12,000 BBY - Galactic Museum secures a recorded history</h3>
-        <p>The grand Galactic Museum is formed, creating a safe place for history and its artifacts to reside for people of today to learn from.</p>
+        <div class="content">
+          <h3>12,000 BBY - Universal Museum secures a recorded history</h3>
+          <p>The grand Universal Museum is formed, creating a safe place for history and its artifacts to reside for people of today to learn from.</p>
+        </div>
       </li>
       <li>
-        <h3>25,053 BBY - Galatic Republic foundation</h3>
-        <p>After the collapse of the Rakata rule, Coruscant signed itself off into the Galactic Constitution, forming the Galactic Republic, and setting Coruscant as the capital.</p>
+        <div class="content">
+          <h3>25,053 BBY - Democracy of the Universe foundation</h3>
+          <p>After the collapse of the Rachasta rule, Coruscant signed itself off into the Universal Constitution, forming the Democracy of the Universe, and setting Coruscant as the capital.</p>
+        </div>
       </li>
       <li>
-        <h3>30,000 BBY - Infinite Empire rule</h3>
-        <p>The Rakata took a liking to the central planet, and assumed ruler of Coruscant over the humans, leading a rule lasting ~5,000 years.</p>
+        <div class="content">
+          <h3>30,000 BBY - Infinite Empire rule</h3>
+          <p>The Rachasta took a liking to the central planet, and assumed ruler of Coruscant over the humans, leading a rule lasting ~5,000 years.</p>
+        </div>
       </li>
       <li>
-        <h3>90,000 BBY - Upward progression</h3>
-        <p>With the population rising, the first level was no longer good enough, more levels were created to facilitate more inhabitants.</p>
+        <div class="content">
+          <h3>90,000 BBY - Upward progression</h3>
+          <p>With the population rising, the first level was no longer good enough, more levels were created to facilitate more inhabitants.</p>
+        </div>
       </li>
       <li>
-        <h3>100,000 BBY - First city</h3>
-        <p>In 100,000 BBY Coruscant see's its first city, built by humans. These places are now left to ruin and buried beneathe the many new layers place atop them.</p>
+        <div class="content">
+          <h3>100,000 BBY - First city</h3>
+          <p>In 100,000 BBY Coruscant see's its first city, built by humans. These places are now left to ruin and buried beneathe the many new layers place atop them.</p>
+        </div>
       </li>
     </ul>
   </main>
+  <script src="src/main.js"></script>
 </body>
 </html>

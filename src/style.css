@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 body {
     background: url("media/background.jpg"); 
     background-size: cover;
@@ -14,4 +16,16 @@ body {
 }
 .text-stroke { /* honestly kinda shocked tailwind doesnt have a text outline */
     text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;
+}
+
+.link:link {
+    color: #0000EE;
+    text-decoration: underline;
+}
+.link:visited {
+    color: #551A8B;
+    text-decoration: underline;
+}
+a:link:active, a:visited:active {
+    color: #FF0000;
 }

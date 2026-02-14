@@ -1,0 +1,147 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #474e5d;
+    font-family: Helvetica, sans-serif;
+}
+
+/*
+ i hate the amount of px usage here, but its still pretty responsive so its probably fine
+ thanks w3schools https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_timeline I was losing my mind and wasting time
+ -milo
+*/
+
+.timeline h3 {
+    font-weight: bold;
+    font-size: large;
+}
+
+/* timeline container*/
+.timeline {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    z-index: 0;
+}
+
+/* The actual timeline (the vertical ruler) */
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    background-color: black;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -3px;
+}
+
+/* Container around content */
+.timeline>li {
+    padding: 10px 40px;
+    position: relative;
+    background-color: inherit;
+    width: 50%;
+}
+
+/* The circles on the timeline */
+.timeline>li::after {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    right: -12px;
+    background-color: white;
+    border: 4px solid #FF9F55;
+    top: 15px;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+/* Place the container to the left */
+.timeline>li:nth-child(even) {
+    left: 0;
+}
+
+/* Place the container to the right */
+.timeline>li:nth-child(odd) {
+    left: 50%;
+}
+
+/* Add connectors to the left container */
+.timeline>li:nth-child(even)::before {
+    content: " ";
+    height: 10px;
+    position: absolute;
+    top: 22px;
+    width: 30px;
+    z-index: 0;
+    right: 10px;
+    background-size: 34px 10px;
+    background-position-x: center;
+    background-image: url("media/connector.svg");
+}
+
+/* Add connectors to the right container */
+.timeline>li:nth-child(odd)::before {
+    content: " ";
+    height: 10px;
+    position: absolute;
+    top: 22px;
+    width: 30px;
+    z-index: 0;
+    left: 10px;
+    background-size: 34px 10px;
+    background-position-x: center;
+    background-image: url("media/connector.svg");
+}
+
+/* Fix the circle for containers on the right side */
+.timeline>li:nth-child(odd)::after {
+    left: -13px;
+}
+
+/* The actual content */
+.content {
+    padding: 20px 30px;
+    background: #A3A3FF;
+    background: linear-gradient(180deg, rgba(163, 163, 255, 0) 0%, rgba(163, 163, 255, 1) 25%, rgba(163, 163, 255, 1) 75%, rgba(163, 163, 255, 0) 100%);
+    position: relative;
+    border-radius: 6px;
+}
+
+/* Media queries - Responsive timeline on screens less than 600px wide */
+@media screen and (max-width: 600px) {
+
+    /* Place the timelime to the left */
+    .timeline::after {
+        left: 31px;
+    }
+
+    /* Full-width containers */
+    .timeline > li {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+    }
+
+    /* Make sure that all arrows are pointing leftwards */
+    .timeline > li::before {
+        left: 40px !important;
+        background-size: 34px 10px;
+        background-position-x: center;
+        background-image: url("media/connector.svg");
+    }
+
+    /* Make sure all circles are at the same spot */
+    .timeline>li::after {
+        left: 18px !important;
+    }
+
+    /* Make all right containers behave like the left ones */
+    .timeline>li:nth-child(odd) {
+        left: 0%;
+    }
+}
