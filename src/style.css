@@ -18,11 +18,11 @@ body {
     text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;
 }
 
-main a:link {
+.link:link {
     color: #0000EE;
     text-decoration: underline;
 }
-main a:visited {
+.link:visited {
     color: #551A8B;
     text-decoration: underline;
 }
