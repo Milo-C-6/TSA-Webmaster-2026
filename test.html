@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<pre></pre>
+<script>
+let ws = new WebSocket("ws://localhost:8764");
+let pre = document.querySelector("pre")
+
+function logg(string) {
+    pre.innerHTML += string + "\n";
+}
+
+ws.addEventListener("error", (e) => {
+    logg("uh oh error")
+});
+ws.addEventListener("open", () => {
+    data = {
+        "request" : "create_resource",
+        "title" : "generic library",
+        "password" : "brick",
+        "color" : "red",
+        "location" : "level 2",
+        "type" : "library",
+    }
+    ws.send(JSON.stringify(data));
+    ws.send(JSON.stringify({"request" : "get_events"}))
+});
+ws.addEventListener("message", (e) => {
+    console.log(e)
+    console.log(e.data)
+    logg(e.data)
+});
+</script>
+</body>
+</html>

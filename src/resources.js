@@ -1,22 +1,19 @@
-/*
-TODO: a lot lol
-    make createArticles create them from a database, use their names, summary, color (maybe?),
-    similarly have viewDetails use that same name, summary, also grab the photos
-*/
-
-function createArticles(toElem, color = "none") {
-    if (color == "none") {
-        colors = ["red", "green", "violet", "purple"] 
-        // supposedly "slate", "cyan", "rose", "lime", "neutral", "amber", "orange", "sky", "gray", "teal", "indigo", "emerald", "pink", "fuchsia", "zinc", "stone", "yellow", "blue" are all colors but they dont work
-        color = colors[Math.floor(Math.random() * (colors.length - 1))]
-    }
+function createArticles(data) {
+    // if (color == "none") {
+    //     colors = ["red", "green", "violet", "purple"] 
+    //     // supposedly "slate", "cyan", "rose", "lime", "neutral", "amber", "orange", "sky", "gray", "teal", "indigo", "emerald", "pink", "fuchsia", "zinc", "stone", "yellow", "blue" are all colors but they dont work
+    //     color = colors[Math.floor(Math.random() * (colors.length - 1))]
+    // }
 
     const newArticle = document.createElement("article");
-    newArticle.classList.add(`bg-${color}-200`, "p-4", "rounded-lg", "w-full");
-    newArticle.innerHTML = `<h3 class="text-2xl font-bold">Generic ${toElem.id}</h3>
-<p class="mt-2 line-clamp-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus diam arcu, volutpat nec tristique cursus, interdum sed orci. Pellentesque vitae neque fringilla, cursus sapien ac, scelerisque arcu. Vivamus venenatis ac velit quis faucibus. Curabitur in nibh sapien. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+    newArticle.classList.add(`bg-${data[3]}-200`, "p-4", "rounded-lg", "w-full");
+    // I probably just dont know how to use sql, but sql is evil and gave the data in arrays without keys, so sorry if the indexing looks a bit unreedable
+    // 0: id, 1: title, 2: description 3: color 4: location 5: type
+    newArticle.dataset.rId = parseInt(data[0]);
+    newArticle.innerHTML = `<h3 class="text-2xl font-bold">${data[1]}</h3>
+<p class="mt-2 line-clamp-4">${data[2]}</p>
 <a href="javascript:void(0)" onclick="viewDetails(this)" class="flex items-center justify-center bg-blue-300 rounded-md w-full text-gray-900 py-1">View Details</a>`;
-    toElem.append(newArticle);
+    document.getElementById(data[5]).append(newArticle);
 }
 
 function viewDetails(anchor) {
@@ -29,13 +26,16 @@ function viewDetails(anchor) {
     }
     anchor.parentElement.parentElement.insertAdjacentElement("afterend", newSection);
     anchor.parentElement.style.display = "none";
+    // find info
+    title = anchor.parentElement.children[0].innerHTML
+    description = anchor.parentElement.children[1].innerHTML
     // Create details
     const newDetails = document.createElement("article");
     newDetails.classList.add("bg-gray-200", "rounded-md", "flex", "my-2", "w-full");
     newDetails.style.height = "75vh";
     newDetails.innerHTML = `<summary class="bg-green-200 w-1/3 rounded-tl-md rounded-bl-md p-2">
-    <h3 class="text-2xl font-bold">Generic library</h3>
-    <p class="mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus diam arcu, volutpat nec tristique cursus, interdum sed orci. Pellentesque vitae neque fringilla, cursus sapien ac, scelerisque arcu. Vivamus venenatis ac velit quis faucibus. Curabitur in nibh sapien. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+    <h3 class="text-2xl font-bold">${title}</h3>
+    <p class="mt-2">${description}</p>
     <ul class="list-disc list-inside">
     <li>this is</li>
     <li>incredibly</li>
@@ -99,8 +99,20 @@ function nextImage(anchor, direction) {
     changeImage(imagesGallary.children[nextIndex]);
 }
 
-for (let i = 0; i < 10; i++) {
-    createArticles(document.getElementById("libraries"));
-    createArticles(document.getElementById("museums"));
-    createArticles(document.getElementById("food"));
+function createEntires(data) {
+    for (resource of data) {
+        createArticles(resource)
+    }
 }
+
+let ws = new WebSocket("ws://localhost:8764");
+
+ws.addEventListener("error", (e) => {
+    console.log("uh oh error, we need a better way of displaying this maybe")
+});
+ws.addEventListener("open", () => {
+    ws.send(JSON.stringify({"request" : "get_resources"}))
+});
+ws.addEventListener("message", (e) => {
+    createEntires(JSON.parse(e.data))
+});
