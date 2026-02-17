@@ -6,7 +6,8 @@ function createArticles(data) {
     // }
 
     const newArticle = document.createElement("article");
-    newArticle.classList.add(`bg-${data[3]}-200`, "p-4", "rounded-lg", "w-full");
+    newArticle.classList.add("p-4", "rounded-lg", "w-full");
+    newArticle.style.backgroundColor = data[3];
     // I probably just dont know how to use sql, but sql is evil and gave the data in arrays without keys, so sorry if the indexing looks a bit unreedable
     // 0: id, 1: title, 2: description 3: color 4: location 5: type
     newArticle.dataset.rId = parseInt(data[0]);
