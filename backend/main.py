@@ -63,15 +63,16 @@ async def editItem(data, ws, type):
 
     con = sqlite3.connect("tsa2026.db")
     cur = con.cursor()
-    hashedPass = cur.execute(f"SELECT password FROM {type} WHERE id = ?", (data["id"],)).fetchone()[0]
+
+    hashedPass = cur.execute(f"SELECT password FROM {type} WHERE id = ?", (int(data["id"]),)).fetchone()[0]
 
     if bcrypt.checkpw(bytes(data["password"], encoding='utf8'), hashedPass):
-        newData = (data["title"], data["description"], data["color"], data["location"], data[specificFields], data["id"])
+        newData = (data["title"], data["description"], data["color"], data["location"], data[specificFields], int(data["id"]))
         cur.execute(f"UPDATE {type} SET title = ?, description = ?, color = ?, location = ?, {specificFields} = ? WHERE id = ?", newData)
         con.commit()
         await ws.send("1")
     else:
-        await ws.send("0")
+        await ws.send("2")
     con.close()
 
 async def serveResponse(websocket):

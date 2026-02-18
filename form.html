@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration - Waterview</title>
+    <title>Form Coruscant</title>
+    <link rel="icon" href="src/media/icon.png" sizes="32x32">
     <link href="/src/style.css" rel="stylesheet">
     <script src="src/head.js"></script>
 </head>
@@ -14,7 +15,13 @@
             <h1 class="text-3xl font-bold text-[#000000] mb-4 text-center">Welcome To Boruscant</h1>
             <p class="text-[#000000] mb-6 text-center">Fill out this form to enter your event or resource</p>
             
-            <form class="space-y-4 flex flex-col items-center justify-center" action="#" method="POST">
+            <form class="space-y-4 flex flex-col items-center justify-center" id="entryForm" action="#" method="POST">
+                <input 
+                    type="number" 
+                    name="id"
+                    style="display: none;"
+                    optional
+                />
                 <input 
                     type="text" 
                     name="eventname"
@@ -26,10 +33,32 @@
                     name="type" 
                     class="w-full bg-white px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6798B5] focus:border-transparent"
                     required
+                    onchange="showSpecificFields(this.form)"
                 >
                     <option value="" disabled selected>Select Type</option>
                     <option value="event">Event</option>
                     <option value="resource">Resource</option>
+                </select>
+                 <!--Following inputs will be hidden until type is chosen-->
+                <input
+                    type="text"
+                    name="startTime"
+                    placeholder="Event Starting Time"
+                    class="w-11/12 bg-white px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6798B5] focus:border-transparent"
+                    style="height: 0; display: none; transition: 150ms;"
+                    optional
+                />
+                <select
+                    type="text"
+                    name="resourceType"
+                    class="w-11/12 bg-white px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6798B5] focus:border-transparent"
+                    style="height: 0; display: none; transition: 150ms;"
+                    optional
+                >
+                    <option value="" disabled selected>Select Resource Type</option>
+                    <option value="library">Library</option>
+                    <option value="museum">Museum</option>
+                    <option value="food">Food</option>
                 </select>
                 <input 
                     type="text" 
@@ -65,6 +94,7 @@
                     <option value="purple">Purple</option>
                     <option value="orange">Orange</option>
                 </select>
+                <p id="formStatus" class="text-left w-full bg-white rounded-md indent-1" style="display: none;">Sending form...</p>
                 <button 
                     type="submit" 
                     class="w-full bg-[#6798B5] hologram hover:bg-[#5086A5] text-white font-semibold py-3 px-4 rounded-lg transition-colors shadow-sm hover:cursor-pointer"
@@ -74,5 +104,6 @@
             </form>
         </div>
     </div>
+    <script src="src/form.js"></script>
 </body>
 </html>

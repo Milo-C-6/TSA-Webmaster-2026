@@ -4,11 +4,11 @@ Project for the TSA Webmaster competition.
 Our project follows the theme by making a community website for a fictional city taking place in the future. (heavily inspired by star wars)
 
 ## TODO:
-- [ ] Rename the planet, and get rid of other copyrighted things
-- [ ] Implement database and form support
-- [ ] Stylize events
-- [ ] Proper light/dark theme support
-- [ ] Experiment with other styling
+- [ ] **Rename the planet, and get rid of other copyrighted things.** Name was chosen as "Boruscant", but needs to be updated for each title, headers, and in the timeline.
+- [x] **Implement database and form support**
+- [ ] **Stylize events**
+- [ ] **Proper light/dark theme support**
+- [ ] **Experiment with other styling** maybe not because of how little time we have left
 
 ## Theme:
 >Create a website that will serve as a community resource hub to highlight resources available to residents within the community (e.g., non-profits, support services, community events and programs, etc.). Your entry for this event is an exception to the general rules for the 2026 National TSA Conference regarding identifying information and you may include school or chapter name if it is the same name as the community used.
