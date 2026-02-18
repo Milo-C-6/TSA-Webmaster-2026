@@ -12,11 +12,11 @@ def createSampleData():
     cur.execute("CREATE TABLE events(id, title, password, description, color, location, start)")
     cur.execute("CREATE TABLE resources(id, title, password, description, color, location, type)")
 
-    events = [
+    events = (
         (0, "Art display", bcrypt.hashpw(bytes("apricot", encoding='utf8'), bcrypt.gensalt(14)), "see awesome fricken art", "blue", "level 2", "August 5th"),
         (1, "Film competition", bcrypt.hashpw(bytes("anvil", encoding='utf8'), bcrypt.gensalt(14)), "show off your cool indie films", "red", "level 3", "August 6th"),
         (2, "Gnosh's pizza opening", bcrypt.hashpw(bytes("pizzatastic", encoding='utf8'), bcrypt.gensalt(14)), "awesome evil pizza place is opening", "yellow", "level 4", "August 7th")
-    ]
+    )
     resources = [
         (0, "Universal Library", bcrypt.hashpw(bytes("rat", encoding='utf8'), bcrypt.gensalt(14)), "holy moly theres alot of history here", "green", "level 7", "library"),
         (1, "Universal Library 2", bcrypt.hashpw(bytes("egg", encoding='utf8'), bcrypt.gensalt(14)), "not enough history though, this has more", "lime", "level 23", "library"),
@@ -31,9 +31,12 @@ def testBcrypt():
     con = sqlite3.connect("tsa2026.db")
     cur = con.cursor()
     cur.execute("SELECT id, password FROM events")
-    print(bcrypt.checkpw(b'apric', cur.fetchone()[1]))
+
+    passw ="apricot"
+
+    print(bcrypt.checkpw(bytes(passw, encoding='utf8'), cur.fetchone()[1]))
     con.close()
 
 if __name__ == "__main__":
-    # createSampleData()
-    testBcrypt()
+    createSampleData()
+    # testBcrypt()

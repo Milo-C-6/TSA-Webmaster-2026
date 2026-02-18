@@ -20,15 +20,17 @@ ws.addEventListener("error", (e) => {
 });
 ws.addEventListener("open", () => {
     data = {
-        "request" : "create_resource",
-        "title" : "generic library",
-        "password" : "brick",
-        "color" : "red",
+        "id" : 0,
+        "request" : "edit_resources",
+        "title" : "Diplomatic Library",
+        "password" : "rat",
+        "description" : "someone destroyed the library",
+        "color" : "green",
         "location" : "level 2",
         "type" : "library",
     }
     ws.send(JSON.stringify(data));
-    ws.send(JSON.stringify({"request" : "get_events"}))
+    // ws.send(JSON.stringify({"request" : "get_resources"}))
 });
 ws.addEventListener("message", (e) => {
     console.log(e)

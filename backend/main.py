@@ -9,72 +9,83 @@ import bcrypt
 TODO: integrate bcrypt or some other password thingamajig
 '''
 
-# Create a resource
-async def createResource(data, ws):
+# Create an entry
+async def createEntry(data, ws, type : str):
+    if type == "events":
+        specificFields = "start"
+    elif type == "resources":
+        specificFields = "type"
+    else: # cant win with these injectors
+        print(type)
+        await ws.send("0")
+        return
+        
     con = sqlite3.connect("tsa2026.db")
     cur = con.cursor()
 
-    id = cur.execute("SELECT id FROM resources ORDER by id DESC").fetchone()
+    id = cur.execute(f"SELECT id FROM {type} ORDER by id DESC").fetchone()
     if id == None:
         id = (-1,)
 
-    inputData = (int(id[0])+1, data["title"], bcrypt.hashpw(bytes(data["password"], encoding='utf8'), bcrypt.gensalt(14)), data["summary"], data["color"], data["location"], data["type"])
+    inputData = (int(id[0])+1, data["title"], bcrypt.hashpw(bytes(data["password"], encoding='utf8'), bcrypt.gensalt(14)), data["description"], data["color"], data["location"], data[specificFields])
 
-    cur.execute("INSERT INTO resources VALUES(?, ?, ?, ?, ?, ?, ?)", inputData)
+    cur.execute(f"INSERT INTO {type} VALUES(?, ?, ?, ?, ?, ?, ?)", inputData)
+    # right now both tables have the same number of fields, but if this isn't the case, then that could create issues in the future
     con.commit()
     con.close()
     await ws.send("1") # success
 
-# Create an event
-async def createEvent(data, ws):
+async def getEntires(ws, type : str):
+    if type == "events":
+        specificFields = ", start"
+    elif type == "resources":
+        specificFields = ", type" # this should probably be changed from type to soemthing else to not get confused with the resources/events type
+    else: # get outa here sql injection-er
+        await ws.send("0")
+        return
+
     con = sqlite3.connect("tsa2026.db")
     cur = con.cursor()
-
-    id = cur.execute("SELECT id FROM events ORDER by id DESC").fetchone()
-    if id == None:
-        id = (-1,)
-
-    inputData = (int(id[0])+1, data["title"], bcrypt.hashpw(bytes(data["password"], encoding='utf8'), bcrypt.gensalt(14)), data["color"], data["location"], data["startTime"])
-
-    cur.execute("INSERT INTO events VALUES(?, ?, ?, ?, ?, ?)", inputData)
-    con.commit()
+    data = cur.execute(f"SELECT id, title, description, color, location{specificFields} FROM {type}").fetchall() 
     con.close()
-    await ws.send("1") # success
-
-async def getEvents(ws):
-    con = sqlite3.connect("tsa2026.db")
-    cur = con.cursor()
-    data = cur.execute("SELECT id, title, description, color, location, start FROM events").fetchall() 
     # now thinking about it maybe passwords shouldnt be there mayhaps?
     await ws.send(json.dumps(data))
 
-async def getResources(ws):
-    con = sqlite3.connect("tsa2026.db")
-    cur = con.cursor()
-    data = cur.execute("SELECT id, title, description, color, location, type FROM resources").fetchall()
-    await ws.send(json.dumps(data))
+async def editItem(data, ws, type):
+    if type == "events":
+        specificFields = "start"
+    elif type == "resources":
+        specificFields = "type"
+    else: # injector blockingtastic!
+        print(type)
+        await ws.send("0")
+        return
 
-async def editItem(data, ws):
-    if data["type"]
     con = sqlite3.connect("tsa2026.db")
     cur = con.cursor()
-    hashPass = cur.execute("SELECT password FROM ")
+    hashedPass = cur.execute(f"SELECT password FROM {type} WHERE id = ?", (data["id"],)).fetchone()[0]
+
+    if bcrypt.checkpw(bytes(data["password"], encoding='utf8'), hashedPass):
+        newData = (data["title"], data["description"], data["color"], data["location"], data[specificFields], data["id"])
+        cur.execute(f"UPDATE {type} SET title = ?, description = ?, color = ?, location = ?, {specificFields} = ? WHERE id = ?", newData)
+        con.commit()
+        await ws.send("1")
+    else:
+        await ws.send("0")
+    con.close()
 
 async def serveResponse(websocket):
     async for message in websocket:
         msgData = json.loads(message)
         request = msgData["request"].split("_")
-        if (msgData["request"] == "get_resources"):
-            await getResources(websocket)
-        if (msgData["request"] == "get_events"):
-            await getEvents(websocket)
-        if (request[0] == "create"):
-            if request[1] == "event":
-                await createEvent(msgData, websocket)
-            elif request[1] == "resource":
-                await createResource(msgData, websocket)
-        if (request[0] == "edit"):
-            pass
+        if (request[0] == "get"):
+            await getEntires(websocket, request[1])
+        elif (request[0] == "create"):
+            await createEntry(msgData, websocket, request[1])
+        elif (request[0] == "edit"):
+            await editItem(msgData, websocket, request[1])
+        else:
+            await websocket.send("0")
 
 async def main():
     async with websockets.serve(serveResponse, "0.0.0.0", 8764):
