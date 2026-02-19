@@ -48,7 +48,7 @@
                 placeholder="password (admin)"
                 style="margin-right: 15px; height: 15px;"
             />
-            <p>Status</p>
+            <p id="status">Status</p>
         </div>
         <button onclick="getEntries('resources')">Pending Resources</button>
         <button onclick="getEntries('events')">Pending Events</button>
@@ -66,7 +66,10 @@
     <script>
         let ws = new WebSocket("ws://localhost:8764");
         const passwordElem = document.getElementById("passwordInput")
+        const statusElem = document.getElementById("status")
+        let expecting;
         function getEntries(type) {
+            expecting = type
             ws.send(JSON.stringify(
                 {
                     "request" : "get_"+type,
@@ -75,12 +78,21 @@
                 }
             ))
         }
+        function createElemsEntries() {
+            
+        }
 
         ws.addEventListener("error", (e) => {
             console.log("uh oh error, we need a better way of displaying this maybe")
         });
         ws.addEventListener("message", (e) => {
-            // createEntires(JSON.parse(e.data))
+            if (e.data != 0) {
+                statusElem.innerHTML = "sucess"
+                statusElem.style.color = "green"
+            } else {
+                statusElem.innerHTML = "error"
+                statusElem.style.color = "red"
+            }
         });
         
     </script>

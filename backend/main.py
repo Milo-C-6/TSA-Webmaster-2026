@@ -43,8 +43,12 @@ async def getEntires(ws, type : str, pending, inputPass):
     else: # get outa here sql injection-er
         await ws.send("0")
         return
-    if (pending and (not bcrypt.checkpw(bytes(data["password"], encoding='utf8')), ADMINPASS)):
-        con = sqlite3.connect("tsa2026_pending.db")
+    if pending:
+        if bcrypt.checkpw(bytes(inputPass, encoding='utf8'), ADMINPASS):
+            con = sqlite3.connect("tsa2026_pending.db")
+        else:
+            await ws.send("0")
+            return
     else:
         con = sqlite3.connect("tsa2026.db")
     cur = con.cursor()
