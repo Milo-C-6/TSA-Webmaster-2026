@@ -20,7 +20,7 @@ async def createEntry(data, ws, type : str):
         await ws.send("0")
         return
         
-    con = sqlite3.connect("tsa2026.db")
+    con = sqlite3.connect("tsa2026_pending.db")
     cur = con.cursor()
 
     id = cur.execute(f"SELECT id FROM {type} ORDER by id DESC").fetchone()
@@ -35,7 +35,7 @@ async def createEntry(data, ws, type : str):
     con.close()
     await ws.send("1") # success
 
-async def getEntires(ws, type : str):
+async def getEntires(ws, type : str, pending, inputPass):
     if type == "events":
         specificFields = ", start"
     elif type == "resources":
@@ -43,15 +43,17 @@ async def getEntires(ws, type : str):
     else: # get outa here sql injection-er
         await ws.send("0")
         return
-
-    con = sqlite3.connect("tsa2026.db")
+    if (pending and (not bcrypt.checkpw(bytes(data["password"], encoding='utf8')), ADMINPASS)):
+        con = sqlite3.connect("tsa2026_pending.db")
+    else:
+        con = sqlite3.connect("tsa2026.db")
     cur = con.cursor()
     data = cur.execute(f"SELECT id, title, description, color, location{specificFields} FROM {type}").fetchall() 
     con.close()
-    # now thinking about it maybe passwords shouldnt be there mayhaps?
+    # now thinking about it maybe passwords shouldnt be in that database mayhaps?
     await ws.send(json.dumps(data))
 
-async def editItem(data, ws, type):
+async def editEntry(data, ws, type):
     if type == "events":
         specificFields = "start"
     elif type == "resources":
@@ -75,21 +77,47 @@ async def editItem(data, ws, type):
         await ws.send("2")
     con.close()
 
+# Accept entries, admin only
+async def acceptEntry(data, ws, type):
+    # check injection or wrong password
+    if (type != "events" and type != "resources") or (not bcrypt.checkpw(bytes(data["password"], encoding='utf8')), ADMINPASS):
+        ws.send("0")
+        return
+    
+    con = sqlite3.connect("tsa2026_pending.db")
+    cur = con.cursor()
+    data = cur.execute(f"SELECT * FROM {type} WHERE id = ?", data["id"]).fetchall()
+    con.close()
+
+    conPublic = sqlite3.connect("tsa2026.db")
+    curPublic = con.cursor()
+
+    id = cur.execute(f"SELECT id FROM {type} ORDER by id DESC").fetchone()
+    if id == None:
+        id = (-1,)
+    inputData = (id, data[1],data[2],data[3],data[4],data[5],data[6])
+    curPublic.execute(f"INSERT INTO {type} VALUES(?, ?, ?, ?, ?, ?, ?)", inputData)
+    conPublic.commit()
+    conPublic.close()
+
 async def serveResponse(websocket):
     async for message in websocket:
         msgData = json.loads(message)
         request = msgData["request"].split("_")
         if (request[0] == "get"):
-            await getEntires(websocket, request[1])
+            await getEntires(websocket, request[1], msgData.get("pending"), msgData.get("password"))
         elif (request[0] == "create"):
             await createEntry(msgData, websocket, request[1])
         elif (request[0] == "edit"):
-            await editItem(msgData, websocket, request[1])
+            await editEntry(msgData, websocket, request[1])
         else:
             await websocket.send("0")
 
 async def main():
     async with websockets.serve(serveResponse, "0.0.0.0", 8764):
         await asyncio.Future()  # run forever
+
+# will def be changed in the actual server
+ADMINPASS = bcrypt.hashpw(b"securePassword", bcrypt.gensalt(14))
 
 asyncio.run(main())

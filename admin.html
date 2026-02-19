@@ -1,0 +1,88 @@
+<!--
+    Document to accept pending resources/events
+    will likely be a different subdomain than the actual website    
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boruscant - Admin</title>
+    <style>
+        header {
+            width: 100%;
+            background: cyan;
+        }
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            row-gap: 1vw;
+            column-gap: 1vw;
+        }
+        header {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        article {
+            width: 15vw;
+            padding: 1em;
+            border-radius: 10px;
+            background-color: lightcoral;
+        }
+        h3 {
+            font-size: x-large;
+            font-weight: bold;
+        }
+        article > p {
+            margin-top: 2em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div style="display: flex; align-items: center;">
+            <input
+                type="text"
+                id="passwordInput"
+                placeholder="password (admin)"
+                style="margin-right: 15px; height: 15px;"
+            />
+            <p>Status</p>
+        </div>
+        <button onclick="getEntries('resources')">Pending Resources</button>
+        <button onclick="getEntries('events')">Pending Events</button>
+    </header>
+    <main>
+        <article>
+            <h3>Generic library</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus diam arcu, volutpat nec tristique cursus, interdum sed orci. Pellentesque vitae neque fringilla, cursus sapien ac, scelerisque arcu. Vivamus venenatis ac velit quis faucibus. Curabitur in nibh sapien. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+            <div>
+                <button>Accept</button>
+                <button>Deny</button>
+            </div>
+        </article>
+    </main>
+    <script>
+        let ws = new WebSocket("ws://localhost:8764");
+        const passwordElem = document.getElementById("passwordInput")
+        function getEntries(type) {
+            ws.send(JSON.stringify(
+                {
+                    "request" : "get_"+type,
+                    "pending" : true,
+                    "password" : passwordElem.value
+                }
+            ))
+        }
+
+        ws.addEventListener("error", (e) => {
+            console.log("uh oh error, we need a better way of displaying this maybe")
+        });
+        ws.addEventListener("message", (e) => {
+            // createEntires(JSON.parse(e.data))
+        });
+        
+    </script>
+</body>
+</html>

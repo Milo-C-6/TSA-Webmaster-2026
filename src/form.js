@@ -28,10 +28,9 @@ document.getElementById("entryForm").addEventListener('submit', function(event) 
     }   
 
     // form.id is set by javascript lower, the user won't set id by accendent
-    if (form.id.value != null) {
+    if (form.id.value != "") {
         data["request"] = "edit_"+form.type.value+"s"
         data["id"] = form.id.value
-        console.log(data["id"])
     } else {
         data["request"] = "create_"+form.type.value+"s"
     }
@@ -47,7 +46,6 @@ document.getElementById("entryForm").addEventListener('submit', function(event) 
     statusElem.style.color = "black";
     statusElem.style.display = "block";
 
-    console.log("still doing something")
     let ws = new WebSocket("ws://localhost:8764");
     ws.addEventListener("error", (e) => {
         console.log("eyyyikes! we got an error");

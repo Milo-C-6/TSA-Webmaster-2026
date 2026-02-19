@@ -57,6 +57,7 @@ function viewDetails(anchor) {
     <a href="javascript:void(0)" onclick="changeImage(this)" class="h-full aspect-square border border-black bg-center bg-cover" style="background-image: url('src/media/placeholder-2.svg');"></a>
     </div>
     <a href="javascript:void(0)" onclick="closeDetails(this)" class="bg-red-300 px-7 py-1 rounded-md">Close</a>
+    <a href="form.html?type=resource&id=${anchor.parentElement.dataset.rId}" title="requires password!" class="bg-yellow-300 px-7 py-1 rounded-md">Edit</a>
 </aside>`;
     newSection.insertAdjacentElement("beforebegin", newDetails);
 } // holy wall of text slop code

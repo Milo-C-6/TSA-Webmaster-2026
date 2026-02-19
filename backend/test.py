@@ -27,6 +27,14 @@ def createSampleData():
     con.commit()
     con.close()
 
+    con2 = sqlite3.connect("tsa2026_pending.db")
+
+    cur2 = con2.cursor()
+    cur2.execute("CREATE TABLE events(id, title, password, description, color, location, start)")
+    cur2.execute("CREATE TABLE resources(id, title, password, description, color, location, type)")
+    con2.commit()
+    con2.close()
+
 def testBcrypt():
     con = sqlite3.connect("tsa2026.db")
     cur = con.cursor()
