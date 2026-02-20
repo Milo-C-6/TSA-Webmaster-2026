@@ -9,6 +9,7 @@ def createSampleData():
     con = sqlite3.connect("tsa2026.db")
 
     cur = con.cursor()
+
     cur.execute("CREATE TABLE events(id, title, password, description, color, location, start)")
     cur.execute("CREATE TABLE resources(id, title, password, description, color, location, type)")
 

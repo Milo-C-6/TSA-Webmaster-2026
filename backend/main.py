@@ -84,38 +84,66 @@ async def editEntry(data, ws, type):
 # Accept entries, admin only
 async def acceptEntry(data, ws, type):
     # check injection or wrong password
-    if (type != "events" and type != "resources") or (not bcrypt.checkpw(bytes(data["password"], encoding='utf8')), ADMINPASS):
-        ws.send("0")
+    if (type != "events" and type != "resources") or (not bcrypt.checkpw(bytes(data["password"], encoding='utf8'), ADMINPASS)):
+        await ws.send("0")
+        return
+    
+    conPending = sqlite3.connect("tsa2026_pending.db")
+    curPending = conPending.cursor()
+    pendingData = curPending.execute(f"SELECT * FROM {type} WHERE id = ?", (int(data["id"]),)).fetchall()
+    curPending.execute(f"DELETE FROM {type} WHERE id = ?", (int(data["id"]),))
+    conPending.commit()
+    conPending.close()
+
+    conPublic = sqlite3.connect("tsa2026.db")
+    curPublic = conPublic.cursor()
+
+    # get the highest id
+    id = curPublic.execute(f"SELECT id FROM {type} ORDER by id DESC").fetchone()
+    if id == None:
+        id = (-1,)
+
+    inputData = (int(id[0])+1, pendingData[0][1],pendingData[0][2],pendingData[0][3],pendingData[0][4],pendingData[0][5],pendingData[0][6])
+    curPublic.execute(f"INSERT INTO {type} VALUES(?, ?, ?, ?, ?, ?, ?)", inputData)
+    conPublic.commit()
+    conPublic.close()
+
+
+
+    await ws.send("1")
+
+# deny entries, admin only
+async def denyEntry(data, ws, type):
+    # check injection or wrong password
+    if (type != "events" and type != "resources") or (not bcrypt.checkpw(bytes(data["password"], encoding='utf8'), ADMINPASS)):
+        await ws.send("0")
         return
     
     con = sqlite3.connect("tsa2026_pending.db")
     cur = con.cursor()
-    data = cur.execute(f"SELECT * FROM {type} WHERE id = ?", data["id"]).fetchall()
+    cur.execute(f"DELETE FROM {type} WHERE id = ?", (int(data["id"]),))
+    con.commit()
     con.close()
 
-    conPublic = sqlite3.connect("tsa2026.db")
-    curPublic = con.cursor()
-
-    id = cur.execute(f"SELECT id FROM {type} ORDER by id DESC").fetchone()
-    if id == None:
-        id = (-1,)
-    inputData = (id, data[1],data[2],data[3],data[4],data[5],data[6])
-    curPublic.execute(f"INSERT INTO {type} VALUES(?, ?, ?, ?, ?, ?, ?)", inputData)
-    conPublic.commit()
-    conPublic.close()
+    await ws.send("1")
 
 async def serveResponse(websocket):
     async for message in websocket:
         msgData = json.loads(message)
         request = msgData["request"].split("_")
-        if (request[0] == "get"):
-            await getEntires(websocket, request[1], msgData.get("pending"), msgData.get("password"))
-        elif (request[0] == "create"):
-            await createEntry(msgData, websocket, request[1])
-        elif (request[0] == "edit"):
-            await editEntry(msgData, websocket, request[1])
-        else:
-            await websocket.send("0")
+        match request[0]:
+            case "get":
+                await getEntires(websocket, request[1], msgData.get("pending"), msgData.get("password"))
+            case "create":
+                await createEntry(msgData, websocket, request[1])
+            case "edit":
+                await editEntry(msgData, websocket, request[1])
+            case "accept":
+                await acceptEntry(msgData, websocket, request[1])
+            case "deny":
+                await denyEntry(msgData, websocket, request[1])
+            case _:
+                await websocket.send("0")
 
 async def main():
     async with websockets.serve(serveResponse, "0.0.0.0", 8764):
