@@ -16,7 +16,6 @@
         main {
             display: flex;
             flex-wrap: wrap;
-            row-gap: 1vw;
             column-gap: 1vw;
         }
         header {
@@ -25,17 +24,16 @@
             align-items: center;
         }
         article {
-            width: 15vw;
-            padding: 1em;
+            width: 20vw;
+            height: 20vw;
+            display: block;
+            padding: 12px;
             border-radius: 10px;
-            background-color: lightcoral;
+            margin-top: 1vw;
         }
         h3 {
             font-size: x-large;
             font-weight: bold;
-        }
-        article > p {
-            margin-top: 2em;
         }
     </style>
 </head>
@@ -48,25 +46,55 @@
                 placeholder="password (admin)"
                 style="margin-right: 15px; height: 15px;"
             />
-            <p>Status</p>
+            <p id="status">Status</p>
         </div>
         <button onclick="getEntries('resources')">Pending Resources</button>
         <button onclick="getEntries('events')">Pending Events</button>
     </header>
     <main>
-        <article>
+        <!-- <article style="background-color: lightgreen;">
             <h3>Generic library</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus diam arcu, volutpat nec tristique cursus, interdum sed orci. Pellentesque vitae neque fringilla, cursus sapien ac, scelerisque arcu. Vivamus venenatis ac velit quis faucibus. Curabitur in nibh sapien. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+            <p>Location:
+                <br>Type:
+            </p>
+            <p>Content</p>
             <div>
-                <button>Accept</button>
-                <button>Deny</button>
+                <button onclick="acceptEntry(this.parentElement.parentElement)">Accept</button>
+                <button onclick="denyEntry(this.parentElement.parentElement)">Deny</button>
             </div>
-        </article>
+        </article> -->
     </main>
     <script>
         let ws = new WebSocket("ws://localhost:8764");
-        const passwordElem = document.getElementById("passwordInput")
+        const passwordElem = document.getElementById("passwordInput");
+        const statusElem = document.getElementById("status");
+        let currentType; // Whatever type is shown on the dashboard, resources/events
+        const mainElem = document.querySelector("main");
+        let latestEntry; // The last entry that was moderated.
+
+        function acceptEntry(article) {
+            ws.send(JSON.stringify({
+                "request" : "accept_"+currentType,
+                "password" : passwordElem.value,
+                "id" : article.dataset.rId
+            }));
+            latestEntry = article;
+            statusElem.color = "black"
+            statusElem.innerHTML = "Pending accept..."
+        }
+        function denyEntry(article) {
+            ws.send(JSON.stringify({
+                "request" : "deny_"+currentType,
+                "password" : passwordElem.value,
+                "id" : article.dataset.rId
+            }));
+            latestEntry = article;
+            statusElem.color = "black"
+            statusElem.innerHTML = "Pending deny..."
+        }
+
         function getEntries(type) {
+            currentType = type
             ws.send(JSON.stringify(
                 {
                     "request" : "get_"+type,
@@ -74,13 +102,43 @@
                     "password" : passwordElem.value
                 }
             ))
+            statusElem.innerHTML = "Connecting..."
+        }
+        function createArticles(data) {
+            const entry = document.createElement("article");
+            entry.style.backgroundColor = data[3];
+            entry.dataset.rId = data[0];
+            entry.innerHTML = `<h3>${data[1]}</h3>
+<p>Location:${data[4]}
+<br>Type:${data[5]}
+</p>
+<p>${data[2]}</p>
+<div>
+    <button onclick="acceptEntry(this.parentElement.parentElement)">Accept</button>
+    <button onclick="denyEntry(this.parentElement.parentElement)">Deny</button>
+</div>`
+            mainElem.appendChild(entry)
         }
 
         ws.addEventListener("error", (e) => {
-            console.log("uh oh error, we need a better way of displaying this maybe")
+            statusElem.innerHTML = "lost connection to database"
+            statusElem.color = "red"
         });
         ws.addEventListener("message", (e) => {
-            // createEntires(JSON.parse(e.data))
+            if (e.data == 1) {
+                statusElem.innerHTML = "sucessfully moderated entry";
+                statusElem.style.color = "green";
+                latestEntry.remove();
+            } else if (e.data != 0) {
+                statusElem.innerHTML = "sucessfully got pending entries"
+                statusElem.style.color = "green"
+                    for (resource of JSON.parse(e.data)) {
+                        createArticles(resource)
+                    }
+            } else {
+                statusElem.innerHTML = "error"
+                statusElem.style.color = "red"
+            }
         });
         
     </script>
