@@ -1,13 +1,22 @@
 function createArticles(data) {
-    // if (color == "none") {
-    //     colors = ["red", "green", "violet", "purple"] 
-    //     // supposedly "slate", "cyan", "rose", "lime", "neutral", "amber", "orange", "sky", "gray", "teal", "indigo", "emerald", "pink", "fuchsia", "zinc", "stone", "yellow", "blue" are all colors but they dont work
-    //     color = colors[Math.floor(Math.random() * (colors.length - 1))]
-    // }
+    /*                    <option value="red">Red</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="purple">Purple</option>
+                    <option value="orange">Orange</option> */
+    const colors = {
+        "red" : "#fca5a5",
+        "orange" : "#fdba74",
+        "yellow" : "#fde047",
+        "green" : "#86efac",
+        "blue" : "#93c5fd",
+        "purple" : "#d8b4fe",
+    } 
 
     const newArticle = document.createElement("article");
-    newArticle.classList.add("p-4", "rounded-lg", "w-full");
-    newArticle.style.backgroundColor = data[3];
+    newArticle.classList.add("p-4", "rounded-lg", "w-full", `bg_${data[3]}`);
+    // newArticle.style.backgroundColor = colors[data[3]];
     // I probably just dont know how to use sql, but sql is evil and gave the data in arrays without keys, so sorry if the indexing looks a bit unreedable
     // 0: id, 1: title, 2: description 3: color 4: location 5: type
     newArticle.dataset.rId = parseInt(data[0]);
