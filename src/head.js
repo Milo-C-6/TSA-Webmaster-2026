@@ -12,7 +12,7 @@ function createNavBar() { // Slightly useful to have it in so I can
     }
 
     const navElem = document.createElement("nav");
-    navElem.classList.add("sticky", "top-0", "bg-white/70", "p-4", "flex", "justify-between", "items-center");
+    navElem.classList.add("sticky", "top-0", "bg-white/70", "dark:bg-black/70", "p-4", "flex", "justify-between", "items-center");
     const navBarContent = `<a>Logo</a>
     <div class="hologram flex justify-between items-center gap-15 p-1 pl-20 pr-20 text-white rounded-2xl backdrop-blur-2xl">
     <!--still feeling slightly iffy about the hologram background, not sure how I would improve it though...-->

@@ -21,12 +21,11 @@ def createSampleData():
     resources = [
         (0, "Universal Library", bcrypt.hashpw(bytes("rat", encoding='utf8'), bcrypt.gensalt(14)), "holy moly theres alot of history here", "green", "level 7", "library"),
         (1, "Universal Library 2", bcrypt.hashpw(bytes("egg", encoding='utf8'), bcrypt.gensalt(14)), "not enough history though, this has more", "green", "level 23", "library"),
-        (2, "Gnosh's pizza", bcrypt.hashpw(bytes("pizzatastic", encoding='utf8'), bcrypt.gensalt(14)), "awesome evil pizza place that is opened probably", "yellow", "level 4", "food")
-        (3, "Gnosh's pizza", bcrypt.hashpw(bytes("pizzatastic", encoding='utf8'), bcrypt.gensalt(14)), "awesome evil pizza place that is opened probably", "yellow", "level 4", "food")
-        (4, "Gnosh's pizza", bcrypt.hashpw(bytes("pizzatastic", encoding='utf8'), bcrypt.gensalt(14)), "awesome evil pizza place that is opened probably", "yellow", "level 4", "food")
-        (5, "Gnosh's pizza", bcrypt.hashpw(bytes("pizzatastic", encoding='utf8'), bcrypt.gensalt(14)), "awesome evil pizza place that is opened probably", "yellow", "level 4", "food")
-        (6, "Gnosh's pizza", bcrypt.hashpw(bytes("pizzatastic", encoding='utf8'), bcrypt.gensalt(14)), "awesome evil pizza place that is opened probably", "yellow", "level 4", "food")
-        (7, "Gnosh's pizza", bcrypt.hashpw(bytes("pizzatastic", encoding='utf8'), bcrypt.gensalt(14)), "awesome evil pizza place that is opened probably", "yellow", "level 4", "food")
+        (2, "Gnosh's pizza", bcrypt.hashpw(bytes("pizzatastic", encoding='utf8'), bcrypt.gensalt(14)), "awesome evil pizza place that is opened probably", "yellow", "level 4", "food"),
+        (3, "Sample 2", bcrypt.hashpw(bytes("pizzatastic", encoding='utf8'), bcrypt.gensalt(14)), "awesome evil pizza place that is opened probably", "red", "level 4", "food"),
+        (5, "Sample 3", bcrypt.hashpw(bytes("pizzatastic", encoding='utf8'), bcrypt.gensalt(14)), "awesome evil pizza place that is opened probably", "blue", "level 4", "food"),
+        (4, "Sample 4", bcrypt.hashpw(bytes("pizzatastic", encoding='utf8'), bcrypt.gensalt(14)), "awesome evil pizza place that is opened probably", "purple", "level 4", "food"),
+        (6, "Sample 5", bcrypt.hashpw(bytes("pizzatastic", encoding='utf8'), bcrypt.gensalt(14)), "awesome evil pizza place that is opened probably", "orange", "level 4", "food")
     ]
     cur.executemany("INSERT INTO events VALUES(?, ?, ?, ?, ?, ?, ?)", events)
     cur.executemany("INSERT INTO resources VALUES(?, ?, ?, ?, ?, ?, ?)", resources)
