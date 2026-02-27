@@ -1,3 +1,5 @@
+const entriesSection = document.getElementById("entriesSection"); 
+
 function createArticles(data) {
     const newArticle = document.createElement("article");
     newArticle.classList.add("p-4", "rounded-lg", "w-full", `bg_${data[3]}`, "flex", "flex-col", "list-none");
@@ -5,10 +7,11 @@ function createArticles(data) {
     // 0: id, 1: title, 2: description 3: color 4: location 5: type
     newArticle.dataset.rId = parseInt(data[0]);
     newArticle.innerHTML = `<h3 class="text-2xl font-bold">${data[1]}</h3>
+    <p class="font-bold capitalize">${data[5]}</p>
 <p><span class="text-bold">Location:</span> ${data[4]}</p>
 <p class="mt-2 line-clamp-4 grow">${data[2]}</p>
 <div class="flex"><a href="javascript:void(0)" onclick="viewDetails(this)" class="flex items-center justify-center bg-blue-200 dark:bg-sky-600 text-gray-900 dark:text-white rounded-md w-full py-1">View Details</a></div>`;
-    document.getElementById(data[5]).append(newArticle);
+    entriesSection.append(newArticle);
 }
 
 function viewDetails(anchor) {
@@ -29,7 +32,7 @@ function viewDetails(anchor) {
     editButton.innerHTML = "Edit";
     editButton.title = "Requires password!!";
     anchor.parentElement.append(editButton);
-    articleElem.children[2].classList.remove("line-clamp-4") // Make all text viewable.
+    articleElem.children[3].classList.remove("line-clamp-4") // Make all text viewable.
     if (curSection.classList.contains("grid-cols-2")) {
         return;
     }
@@ -56,7 +59,7 @@ function viewDetails(anchor) {
     console.log(curSection)
     curSection.insertAdjacentElement("afterend", afterSection);
     curSection.insertAdjacentElement("afterend", newSection);
-} // holy wall of text slop code
+}
 
 function closeDetails(anchor) {
     const articleElem = anchor.parentElement.parentElement;
