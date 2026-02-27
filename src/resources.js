@@ -7,7 +7,7 @@ function createArticles(data) {
     newArticle.innerHTML = `<h3 class="text-2xl font-bold">${data[1]}</h3>
 <p><span class="text-bold">Location:</span> ${data[4]}</p>
 <p class="mt-2 line-clamp-4 grow">${data[2]}</p>
-<div class="flex"><a href="javascript:void(0)" onclick="viewDetails(this)" class="flex items-center justify-center bg-blue-200 rounded-md w-full text-gray-900 py-1">View Details</a></div>`;
+<div class="flex"><a href="javascript:void(0)" onclick="viewDetails(this)" class="flex items-center justify-center bg-blue-200 dark:bg-sky-600 text-gray-900 dark:text-white rounded-md w-full py-1">View Details</a></div>`;
     document.getElementById(data[5]).append(newArticle);
 }
 
@@ -18,14 +18,14 @@ function viewDetails(anchor) {
     articleElem.dataset.opened = true;
     articleElem.style.minHeight = "25vh";
     // Edit button
-    anchor.classList.remove("bg-blue-200", "w-full");
-    anchor.classList.add("bg-red-200", "w-1/2");
+    anchor.classList.remove("bg-blue-200", "dark:bg-sky-600", "w-full");
+    anchor.classList.add("bg-red-200", "dark:bg-rose-600", "w-1/2");
     anchor.innerHTML = "Close Details";
     anchor.setAttribute("onclick", "closeDetails(this)");
     // Add edit button
     const editButton = document.createElement("a")
     editButton.href = `form.html?type=resource&id=${articleElem.dataset.rId}`;
-    editButton.classList.add("flex", "items-center", "justify-center", "bg-yellow-200", "rounded-md", "ml-auto", "w-1/2", "text-gray-900", "py-1");
+    editButton.classList.add("flex", "items-center", "justify-center", "bg-yellow-200", "dark:bg-amber-600", "text-gray-900", "dark:text-white", "rounded-md", "ml-auto", "w-1/2", "py-1");
     editButton.innerHTML = "Edit";
     editButton.title = "Requires password!!";
     anchor.parentElement.append(editButton);
@@ -62,8 +62,8 @@ function closeDetails(anchor) {
     const articleElem = anchor.parentElement.parentElement;
     const curSection = articleElem.parentElement;
     // Revert button
-    anchor.classList.remove("bg-red-200", "w-1/2");
-    anchor.classList.add("bg-blue-200", "w-full");
+    anchor.classList.remove("bg-red-200", "dark:bg-rose-600", "w-1/2");
+    anchor.classList.add("bg-blue-200", "dark:bg-sky-600", "w-full");
     anchor.innerHTML = "View Details";
     anchor.setAttribute("onclick", "viewDetails(this)");
     articleElem.children[2].classList.add("line-clamp-4"); // Reset line clamp

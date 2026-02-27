@@ -37,6 +37,14 @@ body {
     color: #551A8B;
     text-decoration: underline;
 }
+.dark .link:link {
+    color: #bfdbfe;
+    text-decoration: underline;
+}
+.dark .link:visited {
+    color: #c4b5fd;
+    text-decoration: underline;
+}
 a:link:active, a:visited:active {
     color: #FF0000;
 }
