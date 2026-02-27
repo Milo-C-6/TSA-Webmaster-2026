@@ -17,6 +17,9 @@ body {
     background: url("media/background.jpg"); 
     background-size: cover;
 }
+.dark body {
+    background-image: url("media/darkbackground.jpg"); 
+}
 .hologram {
     background: repeating-linear-gradient(rgba(48, 58, 134, 0.7) 0%, rgba(109, 120, 222, 0.4) 15%, rgba(48, 58, 134, 0.7) 30%);
     box-shadow: 0px 0px 15px rgba(109, 120, 222, 1);

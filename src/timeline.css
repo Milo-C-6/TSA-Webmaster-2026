@@ -2,17 +2,15 @@
     box-sizing: border-box;
 }
 
-body {
-    background-color: #474e5d;
-    font-family: Helvetica, sans-serif;
-}
-
 /*
  i hate the amount of px usage here, but its still pretty responsive so its probably fine
  thanks w3schools https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_timeline I was losing my mind and wasting time
  -milo
 */
 
+.timeline {
+    font-family: Helvetica, sans-serif;
+}
 .timeline h3 {
     font-weight: bold;
     font-size: large;
