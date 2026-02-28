@@ -1,5 +1,8 @@
 const entriesSection = document.getElementById("entriesSection"); 
-
+const searchElem = document.getElementById("search");
+const filterElem = document.getElementById("filter");
+const ws = new WebSocket("ws://localhost:8764");
+const entriesElems = [];
 function createArticles(data) {
     const newArticle = document.createElement("article");
     newArticle.classList.add("p-4", "rounded-lg", "w-full", `bg_${data[3]}`, "flex", "flex-col", "list-none");
@@ -12,6 +15,7 @@ function createArticles(data) {
 <p class="mt-2 line-clamp-4 grow">${data[2]}</p>
 <div class="flex"><a href="javascript:void(0)" onclick="viewDetails(this)" class="flex items-center justify-center bg-blue-200 dark:bg-sky-600 text-gray-900 dark:text-white rounded-md w-full py-1">View Details</a></div>`;
     entriesSection.append(newArticle);
+    entriesElems.push(newArticle);
 }
 
 function viewDetails(anchor) {
@@ -56,7 +60,6 @@ function viewDetails(anchor) {
     for (item of curChildren.slice(curChildren.indexOf(articleElem)+offSet)) {
         afterSection.appendChild(item);
     }
-    console.log(curSection)
     curSection.insertAdjacentElement("afterend", afterSection);
     curSection.insertAdjacentElement("afterend", newSection);
 }
@@ -69,7 +72,7 @@ function closeDetails(anchor) {
     anchor.classList.add("bg-blue-200", "dark:bg-sky-600", "w-full");
     anchor.innerHTML = "View Details";
     anchor.setAttribute("onclick", "viewDetails(this)");
-    articleElem.children[2].classList.add("line-clamp-4"); // Reset line clamp
+    articleElem.children[3].classList.add("line-clamp-4"); // Reset line clamp
     anchor.parentElement.children[1].remove(); // Remove edit button
     // Revert ArcitleElem
     delete articleElem.dataset.opened;
@@ -90,44 +93,25 @@ function closeDetails(anchor) {
     curSection.remove();
 }
 
-/* Images aren't going to be used so I'll be commenting all of these
-
-function changeImage(anchor) {
-    const newImage = anchor.style.backgroundImage;
-    const imageCarousel = anchor.parentElement.parentElement.children[0]; 
-    const imageIndex = Array.from(anchor.parentElement.children).indexOf(anchor);
-    imageCarousel.children[1].style.backgroundImage = newImage;
-    imageCarousel.children[1].dataset.imageIndex = imageIndex;
-    if (imageIndex > 0) {
-        imageCarousel.children[0].style.backgroundImage = anchor.parentElement.children[imageIndex-1].style.backgroundImage;
-    } else {
-        imageCarousel.children[0].style.backgroundImage = "";
-    }
-    if (imageIndex < anchor.parentElement.children.length - 1) {
-        imageCarousel.children[2].style.backgroundImage = anchor.parentElement.children[imageIndex+1].style.backgroundImage;
-    } else {
-        imageCarousel.children[2].style.backgroundImage = "";
+function searchEntires(query) {
+    for (item of entriesElems) {
+        if (item.children[0].innerHTML.includes(query) || item.children[3].innerHTML.includes(query)) {
+            item.style.display = "block";
+        } else {
+            item.style.display = "none";
+        }
     }
 }
 
-function nextImage(anchor, direction) {
-    const imageCarousel = anchor.parentElement;
-    const imagesGallary = imageCarousel.parentElement.children[1];
-    nextIndex = direction + parseInt(imageCarousel.children[1].dataset.imageIndex)
-    if (nextIndex < 0 || nextIndex > imagesGallary.children.length) {
-        return //theres no -1 image or image over the length so lets just not.
-    }
-    changeImage(imagesGallary.children[nextIndex]);
-}
-*/
-
-function createEntires(data) {
-    for (resource of data) {
-        createArticles(resource)
+function setFilter(query) {
+    for (item of entriesElems) {
+        if (item.children[1].innerHTML.includes(query)) {
+            item.style.display = "block";
+        }  else {
+            item.style.display = "none";
+        }
     }
 }
-
-let ws = new WebSocket("ws://localhost:8764");
 
 ws.addEventListener("error", (e) => {
     console.log("uh oh error, we need a better way of displaying this maybe")
@@ -136,5 +120,7 @@ ws.addEventListener("open", () => {
     ws.send(JSON.stringify({"request" : "get_resources"}))
 });
 ws.addEventListener("message", (e) => {
-    createEntires(JSON.parse(e.data))
+    for (resource of JSON.parse(e.data)) {
+        createArticles(resource)
+    }
 });

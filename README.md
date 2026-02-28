@@ -9,7 +9,7 @@ Our project follows the theme by making a community website for a fictional city
 - [x] **Stylize events**
 - [x] **Proper light/dark theme support**
 - [ ] **Complete copyright checklist**
-- [ ] **Add search and filter to resources**
+- [x] **Add search and filter to resources**
 - [ ] **Add images to front page**
 - [ ] **Create logo**
 - [ ] **Fix dark mode on form**
