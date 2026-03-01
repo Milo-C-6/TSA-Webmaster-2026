@@ -8,7 +8,7 @@ Our project follows the theme by making a community website for a fictional city
 - [x] **Implement database and form support**
 - [x] **Stylize events**
 - [x] **Proper light/dark theme support**
-- [ ] **Complete copyright checklist**
+- [x] **Complete copyright checklist**
 - [x] **Add search and filter to resources**
 - [x] **Add images to front page**
 - [x] **Create logo**
