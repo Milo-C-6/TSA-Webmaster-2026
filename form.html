@@ -11,9 +11,9 @@
 <body class="text-black dark:text-white bg-white/30 mask-cover">
     <script>createNavBar()</script>
     <div class="h-screen w-full relative flex items-center justify-center">
-        <div class="dark:bg-red-600/40 bg-blue-400/40 backdrop-blur-sm rounded-xl shadow-2xl p-8 max-w-lg w-full mx-4">
-            <h1 class="text-3xl font-bold text-[#000000] mb-4 text-center">Welcome To Boruscant</h1>
-            <p class="text-[#000000] mb-6 text-center">Fill out this form to enter your event or resource</p>
+        <div class="dark:bg-red-700/40 bg-blue-300/70 backdrop-blur-sm rounded-xl shadow-2xl p-8 max-w-lg w-full mx-4">
+            <h1 class="text-3xl font-bold mb-4 text-center">Welcome To Boruscant</h1>
+            <p class="mb-6 text-center">Fill out this form to enter your event or resource</p>
             
             <form class="space-y-4 flex flex-col items-center justify-center" id="entryForm" action="#" method="POST">
                 <input 
@@ -26,12 +26,12 @@
                     type="text" 
                     name="eventname"
                     placeholder="Name of Event / Resource" 
-                    class="w-full bg-white px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6798B5] focus:border-transparent"
+                    class="w-full bg-white dark:bg-gray-900 px-4 py-3 border border-slate-300 dark:border-slate-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6798B5] focus:border-transparent"
                     required
                 />
                 <select 
                     name="type" 
-                    class="w-full bg-white px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6798B5] focus:border-transparent"
+                    class="w-full bg-white dark:bg-gray-900 px-4 py-3 border border-slate-300 dark:border-slate-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6798B5] focus:border-transparent"
                     required
                     onchange="showSpecificFields(this.form)"
                 >
@@ -44,14 +44,14 @@
                     type="text"
                     name="startTime"
                     placeholder="Event Starting Time"
-                    class="w-11/12 bg-white px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6798B5] focus:border-transparent"
+                    class="w-11/12 bg-white dark:bg-gray-900 px-4 py-3 border border-slate-300 dark:border-slate-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6798B5] focus:border-transparent"
                     style="height: 0; display: none; transition: 150ms;"
                     optional
                 />
                 <select
                     type="text"
                     name="resourceType"
-                    class="w-11/12 bg-white px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6798B5] focus:border-transparent"
+                    class="w-11/12 bg-white dark:bg-gray-900 px-4 py-3 border border-slate-300 dark:border-slate-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6798B5] focus:border-transparent"
                     style="height: 0; display: none; transition: 150ms;"
                     optional
                 >
@@ -64,25 +64,25 @@
                     type="text" 
                     name="location"
                     placeholder="Location" 
-                    class="w-full bg-white px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6798B5] focus:border-transparent"
+                    class="w-full bg-white dark:bg-gray-900 px-4 py-3 border border-slate-300 dark:border-slate-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6798B5] focus:border-transparent"
                     optional
                 />
                 <textarea 
                     name="description"
                     placeholder="Description of entry" 
-                    class="w-full bg-white px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6798B5] focus:border-transparent"
+                    class="w-full bg-white dark:bg-gray-900 px-4 py-3 border border-slate-300 dark:border-slate-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6798B5] focus:border-transparent"
                     required
                 ></textarea>
                 <input 
                     type="password" 
                     name="password"
                     placeholder="Password to access / edit details" 
-                    class="w-full bg-white px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6798B5] focus:border-transparent"
+                    class="w-full bg-white dark:bg-gray-900 px-4 py-3 border border-slate-300 dark:border-slate-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6798B5] focus:border-transparent"
                     required
                 />
                 <select 
                     name="color" 
-                    class="w-full bg-white px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6798B5] focus:border-transparent"
+                    class="w-full bg-white dark:bg-gray-900 px-4 py-3 border border-slate-300 dark:border-slate-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6798B5] focus:border-transparent"
                     required
                 >
                     <option value="" disabled selected>Select Color</option>
