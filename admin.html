@@ -25,8 +25,8 @@
         }
         article {
             width: 20vw;
-            height: 20vw;
-            display: block;
+            display: flex;
+            flex-direction: column;
             padding: 12px;
             border-radius: 10px;
             margin-top: 1vw;
@@ -34,6 +34,42 @@
         h3 {
             font-size: x-large;
             font-weight: bold;
+        }
+        .bg_red {
+            background-color: #fca5a5;
+        }
+        .dark .bg_red {
+            background-color: #991b1b;
+        }
+        .bg_orange {
+            background-color: #fdba74; 
+        }
+        .dark .bg_orange {
+            background-color: #c2410c;
+        }
+        .bg_yellow {
+            background-color: #fde047;
+        }
+        .dark .bg_yellow {
+            background-color: #a16207;
+        }
+        .bg_green {
+            background-color: #86efac;
+        }
+        .dark .bg_green {
+            background-color: #166534;
+        }
+        .bg_blue {
+            background-color: #93c5fd;
+        }
+        .dark .bg_blue {
+            background-color: #1d4ed8;
+        }
+        .bg_purple {
+            background-color: #d8b4fe;
+        }
+        .dark .bg_purple {
+            background-color: #7e22ce;
         }
     </style>
 </head>
@@ -106,13 +142,13 @@
         }
         function createArticles(data) {
             const entry = document.createElement("article");
-            entry.style.backgroundColor = data[3];
+            entry.classList.add("bg_"+data[3]);
             entry.dataset.rId = data[0];
             entry.innerHTML = `<h3>${data[1]}</h3>
 <p>Location:${data[4]}
 <br>Type:${data[5]}
 </p>
-<p>${data[2]}</p>
+<p style="flex-grow: 1;">${data[2]}</p>
 <div>
     <button onclick="acceptEntry(this.parentElement.parentElement)">Accept</button>
     <button onclick="denyEntry(this.parentElement.parentElement)">Deny</button>
@@ -132,9 +168,9 @@
             } else if (e.data != 0) {
                 statusElem.innerHTML = "sucessfully got pending entries"
                 statusElem.style.color = "green"
-                    for (resource of JSON.parse(e.data)) {
-                        createArticles(resource)
-                    }
+                for (resource of JSON.parse(e.data)) {
+                    createArticles(resource)
+                }
             } else {
                 statusElem.innerHTML = "error"
                 statusElem.style.color = "red"

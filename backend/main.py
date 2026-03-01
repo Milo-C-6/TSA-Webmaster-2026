@@ -11,11 +11,12 @@ TODO: integrate bcrypt or some other password thingamajig
 
 # Create an entry
 async def createEntry(data, ws, type : str):
+    # check type set specific fields
     if type == "events":
         specificFields = "start"
     elif type == "resources":
         specificFields = "type"
-    else: # cant win with these injectors
+    else:
         print(type)
         await ws.send("0")
         return
@@ -36,11 +37,12 @@ async def createEntry(data, ws, type : str):
     await ws.send("1") # success
 
 async def getEntires(ws, type : str, pending, inputPass):
+    # check type set specific fields
     if type == "events":
         specificFields = ", start"
     elif type == "resources":
-        specificFields = ", type" # this should probably be changed from type to soemthing else to not get confused with the resources/events type
-    else: # get outa here sql injection-er
+        specificFields = ", type"
+    else:
         await ws.send("0")
         return
     if pending:
@@ -58,11 +60,12 @@ async def getEntires(ws, type : str, pending, inputPass):
     await ws.send(json.dumps(data))
 
 async def editEntry(data, ws, type):
+    # check type set specific fields
     if type == "events":
         specificFields = "start"
     elif type == "resources":
         specificFields = "type"
-    else: # injector blockingtastic!
+    else:
         print(type)
         await ws.send("0")
         return
@@ -127,6 +130,21 @@ async def denyEntry(data, ws, type):
 
     await ws.send("1")
 
+# Remove entries, admin only
+async def removeEntry(data, ws, type):
+    # check injection or wrong password
+    if (type != "events" and type != "resources") or (not bcrypt.checkpw(bytes(data["password"], encoding='utf8'), ADMINPASS)):
+        await ws.send("0")
+        return
+    
+    con = sqlite3.connect("tsa2026.db")
+    cur = con.cursor()
+    cur.execute(f"DELETE FROM {type} WHERE id = ?", (int(data["id"]),))
+    con.commit()
+    con.close()
+
+    await ws.send("1")
+
 async def serveResponse(websocket):
     async for message in websocket:
         msgData = json.loads(message)
@@ -142,6 +160,8 @@ async def serveResponse(websocket):
                 await acceptEntry(msgData, websocket, request[1])
             case "deny":
                 await denyEntry(msgData, websocket, request[1])
+            case "remove":
+                await removeEntry(msgData, websocket, request[1])
             case _:
                 await websocket.send("0")
 
