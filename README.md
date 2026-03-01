@@ -4,15 +4,15 @@ Project for the TSA Webmaster competition.
 Our project follows the theme by making a community website for a fictional city taking place in the future. (heavily inspired by star wars)
 
 ## TODO:
-- [ ] **Rename the planet, and get rid of other copyrighted things.** Some images are copyrighted.
+- [x] **Rename the planet, and get rid of other copyrighted things.** Some images are copyrighted.
 - [x] **Implement database and form support**
 - [x] **Stylize events**
 - [x] **Proper light/dark theme support**
 - [ ] **Complete copyright checklist**
 - [x] **Add search and filter to resources**
-- [ ] **Add images to front page**
-- [ ] **Create logo**
-- [ ] **Fix dark mode on form**
+- [x] **Add images to front page**
+- [x] **Create logo**
+- [x] **Fix dark mode on form**
 - ~~[ ] **Experiment with other styling** ~~maybe not because of how little time we have left
 
 ## Theme:
