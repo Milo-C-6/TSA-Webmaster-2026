@@ -123,4 +123,20 @@ ws.addEventListener("message", (e) => {
     for (resource of JSON.parse(e.data)) {
         createArticles(resource)
     }
+    // When clicking on link -- if the link has #filter then that goes into the filter and sets the page up with the filter for the resources
+    // moved here so it sets the filter AFTER all the entries are created.
+    const hash = window.location.hash.substring(1);
+    if (hash) {
+        const filterMapping = {
+            'museums': 'museum',
+            'libraries': 'library', 
+            'food': 'food'
+        };
+        
+        const filterValue = filterMapping[hash];
+        if (filterValue) {
+        document.getElementById('filter').value = filterValue;
+        setFilter(filterValue);
+    }
+  }
 });

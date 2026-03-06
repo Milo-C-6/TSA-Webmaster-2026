@@ -41,24 +41,5 @@
   </main>
   <script src="src/main.js"></script>
   <script src="src/resources.js"></script>
-  <!-- When clicking on link -- if the link has #filter then that goes into the filter and sets the page up with the filter for the resources -->
-  <script>
-window.addEventListener('load', function() {
-  const hash = window.location.hash.substring(1);
-  if (hash) {
-    const filterMapping = {
-      'museums': 'museum',
-      'libraries': 'library', 
-      'food': 'food'
-    };
-    
-    const filterValue = filterMapping[hash];
-    if (filterValue) {
-      document.getElementById('filter').value = filterValue;
-      setFilter(filterValue);
-    }
-  }
-});
-</script>
 </body>
 </html>
